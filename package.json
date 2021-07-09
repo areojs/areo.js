@@ -1,0 +1,13 @@
+{
+  "name": "areo.js",
+  "version": "0.0.2",
+  "description": "Discord bot creator.",
+  "main": "Bot.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@areojs/events": "^1.0.1"
+  }
+}
