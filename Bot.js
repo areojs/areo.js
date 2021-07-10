@@ -37,7 +37,7 @@ class Bot extends EventEmitter {
        this.heartbeat();
     }))
 
-    client.on('message', Data => {
+    this.ws.on('message', Data => {
        const data = JSON.parse(Data);
        const { op, t, d } = data;
        
