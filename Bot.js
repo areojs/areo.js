@@ -21,8 +21,12 @@ class Bot extends EventEmitter {
   async connect() {
     this.ws = new WebSocket('wss://gateway.discord.gg/?v=9&encoding=json');
     
+    super.emit('debug', 'connecting to the gateaway.')
+
     this.ws.on('open', () => {
       super.emit('open', this);
+
+      suoer.emit('debug', 'sending the payload.')
       
       payload.d.token = this.token;
       
@@ -39,6 +43,8 @@ class Bot extends EventEmitter {
   
   heartbeat() {
      this.ws.send(JSON.stringify({op:2,d:null})
+
+     super.emit('heartbeat', this);
   }
                   
   destroy() {
@@ -55,6 +61,8 @@ class Bot extends EventEmitter {
         clearTimeout(timeout[1]);
         this._timeouts.delete(interval[0]);
      }
+
+     super.emit('debug', 'client destroyed.')
        
      return null;
   }
