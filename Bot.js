@@ -18,7 +18,13 @@ class Bot extends EventEmitter {
     
     this._intervals = new Map();
     this._timeouts = new Map();
+
+    this.readyAt = 0;
     
+  }
+
+  get uptime() {
+    return Date.now() - this.readyAt;
   }
   
   async connect() {
@@ -54,6 +60,14 @@ class Bot extends EventEmitter {
           case 'MESSAGE_CREATE':
           
           super.emit('message', new Message(d));
+          break;
+          
+          case 'READY':
+          
+          super.emit('ready', this);
+          
+          this.readyAt = Date.now();
+          
           break;
        }
     });
