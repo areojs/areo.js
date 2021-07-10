@@ -33,12 +33,22 @@ class Bot extends EventEmitter {
       this.ws.send(JSON.stringify(payload))
     });
     
-    return this.token;
-    
     this._intervals.set('HEARTBEAT', setInterval(()=> {
        this.heartbeat();
     }))
+
+    client.on('message', Data => {
+       const data = JSON.parse(Data);
+       const { op, t, d } = data;
+       
+       switch(t) {
+          case 'MESSAGE_CREATE'
+          console.log(d)
+       }
+    })
     
+    return this.token;
+   
   }
   
   heartbeat() {
