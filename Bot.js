@@ -43,9 +43,20 @@ class Bot extends EventEmitter {
                   
   destroy() {
        
-     this._intervals.clear();
-     this._timeouts.clear();
+     let intervals = Array.from(this._intervals);
+     let timeouts = Array.from(this._timeouts);
        
+     for(let interval of intervals) {
+        clearInterval(interval[1])
+        this._intervals.delete(interval[0])
+     }
+       
+     for(let timeout of timeouts) {
+        clearTimeout(timeout[1]);
+        this._timeouts.delete(interval[0]);
+     }
+       
+     return null;
   }
 }
 
