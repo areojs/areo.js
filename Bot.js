@@ -38,7 +38,7 @@ class Bot extends EventEmitter {
   }
   
   heartbeat() {
-     this.ws.send(JSON.stringifu({op:2,d:null})
+     this.ws.send(JSON.stringify({op:2,d:null})
   }
                   
   destroy() {
