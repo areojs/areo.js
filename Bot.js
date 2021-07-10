@@ -1,3 +1,4 @@
+
 const EventEmitter = require('@areojs/events');
 const { payload } = require('@areojs/constants');
 
@@ -5,6 +6,7 @@ const WebSocket = require('ws');
 
 class Bot extends EventEmitter {
   constructor(token, options) {
+    super();
     
     Object.defineProperty(this, 'token', {
       value: token,
@@ -21,38 +23,46 @@ class Bot extends EventEmitter {
   async connect() {
     this.ws = new WebSocket('wss://gateway.discord.gg/?v=9&encoding=json');
     
-    super.emit('debug', 'connecting to the gateaway.')
-
+    super.emit('debug', 'connecting to the gateaway.');
+    
     this.ws.on('open', () => {
       super.emit('open', this);
 
-      suoer.emit('debug', 'sending the payload.')
+      super.emit('debug', 'sending the payload.');
       
       payload.d.token = this.token;
       
-      this.ws.send(JSON.stringify(payload))
+      this.ws.send(JSON.stringify(payload));
+      
     });
     
-    this._intervals.set('HEARTBEAT', setInterval(()=> {
-       this.heartbeat();
-    }))
 
     this.ws.on('message', Data => {
        const data = JSON.parse(Data);
        const { op, t, d } = data;
        
-       switch(t) {
-          case 'MESSAGE_CREATE'
-          console.log(d)
+       switch(op) {
+         case 10:
+           this._intervals.set('HEARTBEAT', setInterval(()=> {
+           this.heartbeat();
+           }, d.heartbeat_interval));
+           break;
        }
-    })
+       
+       switch(t) {
+          case 'MESSAGE_CREATE':
+          
+          super.emit('message', d);
+          break;
+       }
+    });
     
     return this.token;
    
   }
   
   heartbeat() {
-     this.ws.send(JSON.stringify({op:2,d:null})
+     this.ws.send(JSON.stringify({op:2,d:null}));
 
      super.emit('heartbeat', this);
   }
@@ -77,5 +87,3 @@ class Bot extends EventEmitter {
      return null;
   }
 }
-
-module.exports = Bot;
