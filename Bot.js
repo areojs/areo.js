@@ -1,6 +1,7 @@
 
 const EventEmitter = require('@areojs/events');
 const { payload } = require('@areojs/constants');
+const { Message } = require('@areojs/structures');
 
 const WebSocket = require('ws');
 
@@ -52,7 +53,7 @@ class Bot extends EventEmitter {
        switch(t) {
           case 'MESSAGE_CREATE':
           
-          super.emit('message', d);
+          super.emit('message', new Message(d));
           break;
        }
     });
