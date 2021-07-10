@@ -13,6 +13,9 @@ class Bot extends EventEmitter {
       writable: true
     });
     
+    this._intervals = new Map();
+    this._timeouts = new Map();
+    
   }
   
   async connect() {
@@ -21,12 +24,28 @@ class Bot extends EventEmitter {
     this.ws.on('open', () => {
       super.emit('open', this);
       
-      payload.token = this.token;
+      payload.d.token = this.token;
       
       this.ws.send(JSON.stringify(payload))
     });
     
     return this.token;
+    
+    this._intervals.set('HEARTBEAT', setInterval(()=> {
+       this.heartbeat();
+    }))
+    
+  }
+  
+  heartbeat() {
+     this.ws.send(JSON.stringifu({op:2,d:null})
+  }
+                  
+  destroy() {
+       
+     this._intervals.clear();
+     this._timeouts.clear();
+       
   }
 }
 
