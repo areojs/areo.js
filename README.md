@@ -1,1 +1,1 @@
-# AreoJS - Um pacote que interaje com a API do Discord.
+# AreoJS - Um pacote que interae com a API do Discord.
