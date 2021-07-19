@@ -10,6 +10,15 @@ class Collection extends Map {
     
     return null;
   }
+  
+  reduce(fn, accV) {
+    let acc = accV ? accV : 0;
+    
+    for(const [k, v] of this) acc = fn.call(this, acc, v, k);
+    
+    return acc;
+    
+  }
 }
 
 module.exports = Collection;

@@ -12,3 +12,7 @@ client.on('ready', () => {
 
 client.connect("YOUR_BOT_TOKEN_GOES_HERE");
 ```
+
+# Support
+
+Do you have a question or want support? join our official [discord server](https://discord.gg/TZhYdRZnCS)!

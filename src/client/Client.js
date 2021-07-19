@@ -92,7 +92,7 @@ class Client extends EventEmitter {
   createMessage(channelID, content) {
     
     return new Promise(resolve => {
-      Client.request(this, 'post', `channels/${channelID}/messages`, content).then(m => resolve(new Message(this, m)));
+      Client.request(this, 'post', `channels/${channelID}/messages`, content).then(m => resolve(m));
     });
     
   }

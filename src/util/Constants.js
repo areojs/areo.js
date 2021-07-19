@@ -24,8 +24,37 @@ module.exports.MessageTypes = [
     "GUILD_INVITE_REMINDER"
 ];
 
+module.exports.ChannelTypes = [
+  'GUILD_TEXT',
+  'DM',
+  'GUILD_VOICE',
+  'GROUP_DM',
+  'GUILD_CATEGORY',
+  'GUILD_NEWS',
+  'GUILD_STORE',
+  undefined, undefined, undefined, undefined,
+  'GUILD_NEWS_THREAD',
+  'GUILD_PUBLIC_THREAD',
+  'GUILD_PRIVATE_THREAD',
+  'GUILD_STAGE_VOICE'
+];
+
+module.exports.ResolvedChannelTypes = {
+  'GUILD_TEXT': 'text',
+  'DM': 'dm',
+  'GUILD_VOICE': 'voice',
+  'GROUP_DM': 'group',
+  'GUILD_CATEGORY': 'category',
+  'GUILD_NEWS': 'news',
+  'GUILD_STORE': 'store',
+  'GUILD_NEWS_THREAD': 'newsThread',
+  'GUILD_PUBLIC_THREAD': 'publicThread',
+  'GUILD_PRIVATE_THREAD': 'privateThread',
+  'GUILD_STAGE_VOICE': 'stage'
+};
+
 module.exports.gateawayURL = `wss://gateway.discord.gg/`;
 module.exports.gateawayVersion = 9;
 module.exports.gateawayEncoding = 'json';
 
-module.exports.DefaultClientIntents = 513;
+module.exports.DefaultClientIntents = 4609;

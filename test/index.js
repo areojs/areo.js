@@ -3,7 +3,7 @@ const { Authorization, Prefix } = require('./Authorization');
 
 const util = require("util");
 
-const client = Client();
+const client = new Client({ws:{intents: 4609}});
 
 client.on("messageCreate", async message => {
   console.log(message)
@@ -15,24 +15,40 @@ client.on("messageCreate", async message => {
   const command = args.shift().toLowerCase();
   
   console.log(command)
+  console.log(message.channelID)
   
   if(command == "eval" && message.author.id == '852922358170779658') {
     
+    let e = util.inspect(eval(args.join(" ")));
+    console.log(args)
+    console.log(e);
+    
+    console.log(message.channelID)
+    
     client.createMessage(
-      message.channelID, {content:util.inspect(eval(args.join(" ")))});
+      message.channelID, {content:e});
   }
   
   if(command == "ping") {
-    const { shardID } = client.guilds.get(message.guildID);
+    let ping;
     
-    const { ping } = client.ws.shards.get(shardID);
+    try {
+      const { shardID } = client.guilds.get(message.guildID);
+      
+      ping = client.ws.shards.get(shardID).ping;
+    } catch (e) {
+      ping = client.ws.shards.reduce((acc, shard) => acc+ shard.ping, 0);
+    }
+    
+    console.log(ping)
     
     console.log(await client.createMessage(message.channelID, {
       content: `Pong! \`${ping}ms\``
-    }))
+    }));
   }
   
-})
+});
 
-client.connect(Authorization);
-
+client.connect(Authorization).then(token => {
+  client.ws.on('message', console.log);
+});
